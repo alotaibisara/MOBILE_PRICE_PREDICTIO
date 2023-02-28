@@ -1,12 +1,21 @@
 from django.views.generic.base import View
-from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render,redirect,HttpResponseRedirect
+from django.contrib.auth import authenticate, login,logout
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
 from core.forms import LoginForm,TrainForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from core.models import TrainModel # imports the model
+
+
+from django.urls import reverse
+from django.http import JsonResponse
+from core.predictor import Predictor
+import numpy as np
+
+
+
 class ViewLogin(View):
     http_method_names = [
         "get",
@@ -15,7 +24,7 @@ class ViewLogin(View):
     form = LoginForm
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'login.html', {"form":self.form()})
+        return render(request, 'login.html', {"form":self.form(),})
     def post(self, request, *args, **kwargs):
  
         self.form = self.form(data=request.POST)
@@ -38,34 +47,49 @@ class ViewLogin(View):
 
 
 
+# @login_required
+@login_required
 
-from django.db.models import Avg,Max,Min
-# from pandas
-import pandas as pd
+def logout_view(request):
+    """
+    logout and remove all session data
+    """
 
-def data_farme():
-    query_data = TrainModel.objects.all()
+    logout(request)
 
-    
-    df = pd.DataFrame(
-  list(query_data.values('battery_power','bluetooth','clock_speed','dual_sim','front_camera','four_g','internal_memory','mobile_depth','mobile_weight','number_cores','primary_camera','px_height','px_width','ram','screen_height','screen_width','talk_time','three_g','touch_screen','wifi'))
+    return HttpResponseRedirect(reverse('index')) 
 
-)
 
-from django.http import JsonResponse
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 @method_decorator(login_required, name='dispatch')
-class ViewIndex(View):
+class ViewPrediction(View):
     form_class = TrainForm
     def get(self, request, *args, **kwargs):
-        return render(request, 'index.html', {'form':self.form_class()})
+        return render(request, 'prediction.html', {'form':self.form_class()})
     def post(self, request, *args, **kwargs):
         self.form_class=self.form_class(data=request.POST)
         if self.form_class.is_valid():
-            print(request.POST)
+            form_data=self.form_class.cleaned_data
+            # print([form_data[f] for f in form_data])
+            trian=Predictor()
+            per=trian.lreg.predict(trian.s.transform(np.array([1866,0,1.5,0,13,1,52,2.7,185,1,17,356,563,373,14,9,3,1,0,1,]).reshape(1,-1)))
+            print(per)
+            message=" "
+            if per ==0:
+                message="Your Phone is low cost"
+            elif per ==1:
+                message="Your Phone is medium cost"
+            elif per ==2:
+                message="Your Phone is Hight cost"
+            else:
+                message="Your Phone is Very Hight cost"
+
             context={
                 'status': "success",
-                'message':'ddfd'
+                'message': message
+
             }
         else:
             context={
@@ -78,3 +102,16 @@ class ViewIndex(View):
 
 
 
+
+
+
+@method_decorator(login_required, name='dispatch')
+class ViewIndex(View):
+    form_class = TrainForm
+    def get(self, request, *args, **kwargs):
+        return render(request, 'index.html', {'home':'active'})
+
+@method_decorator(login_required, name='dispatch')
+class ViewAboutUs(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'about_us.html', {'about_us':"active"})

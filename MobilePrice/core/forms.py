@@ -16,137 +16,146 @@ def get_data_choices(col,texting):
     return (
     ('', "  "),
     (data['min'], "{0} {1}".format(data['min'],texting)),
-    (data['avg'], "{0} {1}".format(data['avg'],texting)),
+    # (data['avg'], "{0} {1}".format(data['avg'],texting)),
     (data['max'], "{0} {1}".format(data['max'],texting)),
     )
 
 BOLEAN_CHOICES =(
     ('', "  "),
     (1, "Yes"),
-    (0, "No"),
- 
-)
-
-# def get_data(col,texting):
-    # TrainModel.objects.all()
-    # .aggregate(Avg())
+    (0, "No"),)
 
 class TrainForm(forms.Form):
-    battery_power = forms.IntegerField(label=_('What is your battery capacity'),
-                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('battery_power','mh')),
+    battery_power = forms.IntegerField(label=_('Choice battery capacity'),
+                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=(('', "  "),(1949, '1949 mh' ),
+(803, ' 803  mh' ),
+(519, ' 519  mh' ),)),
                            
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    bluetooth =forms.BooleanField(label=_('Is there bluetooth in your mobile phone'),
+    bluetooth =forms.IntegerField(label=_('have a bluetooth'),
                             widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=BOLEAN_CHOICES),
                             required=True,
                            disabled=False,
                            help_text="")
-    clock_speed = forms.DecimalField(label=_('What is the frequency of your mobile phone processor'),
-                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('clock_speed','GHz')),
+    clock_speed = forms.DecimalField(label=_('Choice Speed processor'),
+                                     widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=(('', "  "),( 2.6, '2.6 GHz' ),
+( 2.1, '2.1 GHz' ),
+( 1.6, '1.6 GHz' ),)),
+
                            max_digits=3,
                            decimal_places=1,
                            required=True,
                            disabled=False,
                            help_text="")
-    dual_sim= forms.BooleanField(label=_('Does your device have a dual_sim feature'),
+    dual_sim= forms.IntegerField(label=_('Have Dual SIM'),
                             widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=BOLEAN_CHOICES),
                            required=True,
                            disabled=False,
                            help_text="") 
-    front_camera= forms.IntegerField(label=_('How many megapixels is your front camera'),
-                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('front_camera','mega pixels')),
+    front_camera= forms.IntegerField(label=_('Choice Size front camera'),
+                                     widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=(('', "  "),(3, "3 mega pixels"),(7, "7 mega pixels"),(4, "4 mega pixels"))),
+
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    four_g= forms.BooleanField(label=_('Does your device support 4G technology?'),
+    four_g= forms.IntegerField(label=_('Have 4G technology?'),
                                widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=BOLEAN_CHOICES),
                            required=True,
                            disabled=False,
                            help_text="") 
-    internal_memory= forms.IntegerField(label=_('What is the internal memory capacity of your mobile phone'),
-                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('internal_memory','GB')),
+    internal_memory= forms.IntegerField(label=_('choice internal memory capacity'),
+                                                                             widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=(('', "  "),( 47, '47 GB' ),
+( 17, '17 GB' ),
+( 51, '51 GB' ),)),
+
                            
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    mobile_depth =forms.DecimalField(label=_('Enter the depth of your mobile in cm'),
-                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('mobile_depth','CM')),
+    mobile_depth =forms.DecimalField(label=_('choice depth of Mobile'),
+                                     widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=(('', "  "),( 0.3, '0.3 CM' ),
+( 1.0, '1.0 CM' ),
+( 0.3, '0.3 CM' ),)),
+
                            max_digits=3,
                            decimal_places=1,
                            required=True,
                            disabled=False,
                            help_text="")
-    mobile_weight= forms.IntegerField(label=_('Enter the Weight of your mobile in gram'),
-                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('mobile_weight','CM')),
-                           
+    mobile_weight= forms.IntegerField(label=_('choice Weight of mobile'),
+                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=(('', "  "),( 199, '199 CM' ),
+( 198, '198 CM' ),
+( 132, '132 CM' ),)),
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    number_cores= forms.IntegerField(label=_('Enter the Number of cores of a processor'),
-                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('number_cores','Core')),
+    number_cores= forms.IntegerField(label=_('choice cores of a processor'),
+                                                                                                                  widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=(('', "  "),(1, "1 Core"),(3, "3 Core"),(8, "8 Core"))),
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    primary_camera= forms.IntegerField(label=_('How many megapixels is your primary camera'),
-                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('primary_camera','MPls')),
+    primary_camera= forms.IntegerField(label=_('choice primary camera'),
+                                     widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=(('', "  "),(3, "3 mega pixels"),(17, "17 mega pixels"),(2, "2 mega pixels"))),
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    px_height= forms.IntegerField(label=_('Enter Pixel Resolution Height'),
-                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('px_height','Pixel')),
+    
+    px_height= forms.IntegerField(label=_('choice Resolution Height'),
+                                                                                                                                             
+                        widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=(('', "  "),(3, "3 Pixels"),(17, "17 pixels"),(2, "2 mega pixels"))),
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    px_width= forms.IntegerField(label=_('Enter Pixel Resolution Width'),
-                           widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('px_width','Pixel')),
+    px_width= forms.IntegerField(label=_('choice Resolution Width'),
+                        widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=(('', "  "),(3, "3 Pixels"),(17, "17 pixels"),(2, "2 mega pixels"))),
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    ram= forms.IntegerField(label=_('What is the RAM capacity of your mobile phone'),
+    ram= forms.IntegerField(label=_('choice RAM capacity'),
                            widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('ram','MB')),
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    screen_height= forms.IntegerField(label=_('15-Enter the Screen Height of mobile in cm'),
+    screen_height= forms.IntegerField(label=_('Choice Height of mobile'),
                            widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('screen_height','CM')),
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    screen_width= forms.IntegerField(label=_('Enter the Screen Width of mobile in cm'),
+    screen_width= forms.IntegerField(label=_('Choice Width of mobile'),
                            widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('screen_width','CM')),
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    talk_time= forms.IntegerField(label=_('what is the longest time that a single battery charge will last when you are'),
+    talk_time= forms.IntegerField(label=_(' Choice longest time that a single battery'),
                            widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=get_data_choices('talk_time','%')),
                            required=True,
                            localize=True,
                            disabled=False,
                            help_text="")
-    three_g=forms.BooleanField(label=_('Does your device support 3G technology'),
+    three_g=forms.IntegerField(label=_('Have 3G technology'),
                             widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=BOLEAN_CHOICES),
                            required=True,
                            disabled=False,
                            help_text="")
-    touch_screen=forms.BooleanField(label=_('Does your device support touch screen'),
+    touch_screen=forms.IntegerField(label=_('Does your device support touch screen'),
                             widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=BOLEAN_CHOICES),
                            required=True,
                            disabled=False,
                            help_text="")
-    wifi=forms.BooleanField(label=_('Wifi'),
+    wifi=forms.IntegerField(label=_('Does have Wifi'),
                             widget=forms.Select(attrs={'class':'form-control','placeholder':" "},choices=BOLEAN_CHOICES),
                            required=True,
                            disabled=False,
