@@ -78,13 +78,13 @@ class ViewPrediction(View):
             print(per)
             message=" "
             if per ==0:
-                message="Your Phone is low cost"
+                message="Your Phone Between [700 & 1000] "
             elif per ==1:
-                message="Your Phone is medium cost"
+                message="Your Phone Btween [1100 & 1400]"
             elif per ==2:
-                message="Your Phone is Hight cost"
+                message="Your Phone Between [1500 & 1700]"
             else:
-                message="Your Phone is Very Hight cost"
+                message="Your Phone Between [ 1800 & 2000]"
 
             context={
                 'status': "success",
