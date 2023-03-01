@@ -3,8 +3,12 @@
  <!-- ======= Footer ======= -->
  <footer id="footer">
 
-  
-  
+
+  <div class="container py-4">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Sara Alotaibi</span></strong>
+    </div>
+  </div>
 </footer><!-- End Footer -->
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -23,6 +27,10 @@
 <!-- Template Main JS File -->
 <script src="{% static 'js/main.js' %}"></script>
 <script>
+$(document).on('click','.close_modal',function(event){
+
+  $('.modal').modal('hide')
+});
 
 $(document).on('submit','.form_view',function(event){
     event.preventDefault();
@@ -55,8 +63,9 @@ $(document).on('submit','.form_view',function(event){
 
         else{
           $('#result_modal').modal('show');
-          $('#message_price').text(res.message);
-          $(form)[0].reset();
+           var mes= `<h4>`+res.message+`</h4>`+` cost mobile with the features you have Entered.`;
+
+          $('#message_price').html(mes);
 
           
          

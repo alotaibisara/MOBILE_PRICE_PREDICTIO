@@ -10,6 +10,7 @@ urlpatterns = [
         path("logout/", view.logout_view,name='logout'),
         path("about_us/", view.ViewAboutUs.as_view(),name='about_us'),
         path("prediction/", view.ViewPrediction.as_view(),name='prediction'),
+        path("message/", view.ViewMessage.as_view(),name='message_form'),
         path("", view.ViewIndex.as_view(),name='index'),
 
 ]

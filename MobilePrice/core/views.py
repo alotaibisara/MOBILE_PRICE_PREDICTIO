@@ -1,5 +1,5 @@
 from django.views.generic.base import View
-from django.shortcuts import render,redirect,HttpResponseRedirect
+from django.shortcuts import render,redirect,HttpResponseRedirect,HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
@@ -40,7 +40,6 @@ class ViewLogin(View):
                 messages.add_message(request, messages.ERROR,_('You are not eligible to access the system yet, wait for admin’s approval'))
 
         else:
-            print(self.form.errors)
 
             messages.error(request,self.form.errors)
             return render(request, 'login.html', {"form":self.form})
@@ -67,28 +66,35 @@ def logout_view(request):
 class ViewPrediction(View):
     form_class = TrainForm
     def get(self, request, *args, **kwargs):
-        return render(request, 'prediction.html', {'form':self.form_class()})
+        return render(request, 'prediction.html', {'prediction':'active','form':self.form_class()})
     def post(self, request, *args, **kwargs):
         self.form_class=self.form_class(data=request.POST)
         if self.form_class.is_valid():
             form_data=self.form_class.cleaned_data
-            # print([form_data[f] for f in form_data])
             trian=Predictor()
-            per=trian.lreg.predict(trian.s.transform(np.array([1866,0,1.5,0,13,1,52,2.7,185,1,17,356,563,373,14,9,3,1,0,1,]).reshape(1,-1)))
-            print(per)
+            per=trian.lreg.predict(trian.s.transform(np.array([form_data[i] for i in form_data]).reshape(1,-1)))
             message=" "
+            url = " "
             if per ==0:
-                message="Your Phone Between [700 & 1000] "
+                message="Between [700 & 1000] "
+                url="https://www.amazon.com/cell-phone-devices/b/ref=dp_bc_aui_C_2?ie=UTF8&node=7072561011"            
             elif per ==1:
-                message="Your Phone Btween [1100 & 1400]"
+                message="Between [1100 & 1300]"
+                url="https://www.amazon.com/cell-phone-devices/b/ref=dp_bc_aui_C_2?ie=UTF8&node=7072561011"            
+
             elif per ==2:
-                message="Your Phone Between [1500 & 1700]"
+                message="Between [1400 & 1700]"
+                url="https://www.amazon.com/cell-phone-devices/b/ref=dp_bc_aui_C_2?ie=UTF8&node=7072561011"            
+
             else:
-                message="Your Phone Between [ 1800 & 2000]"
+                message="Between [1800 & 2000]"
+                url="https://www.amazon.com/cell-phone-devices/b/ref=dp_bc_aui_C_2?ie=UTF8&node=7072561011"            
+
 
             context={
                 'status': "success",
-                'message': message
+                'message': message,
+                'url' :url
 
             }
         else:
@@ -101,17 +107,21 @@ class ViewPrediction(View):
         return JsonResponse(context,status=200)
 
 
-
-
-
-
-@method_decorator(login_required, name='dispatch')
 class ViewIndex(View):
     form_class = TrainForm
     def get(self, request, *args, **kwargs):
         return render(request, 'index.html', {'home':'active'})
 
-@method_decorator(login_required, name='dispatch')
 class ViewAboutUs(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'about_us.html', {'about_us':"active"})
+
+
+class ViewMessage(View):
+    http_method_names = [
+        "post",
+    ]
+    def post(self, request, *args, **kwargs):
+     
+        return HttpResponse('index') 
+

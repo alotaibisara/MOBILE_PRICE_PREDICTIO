@@ -4,7 +4,15 @@
 
   <!-- ======= Hero Section ======= -->
   {% block content %}
-
+<style>
+  .services .title {
+    text-align: center;
+    margin-left: 40px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    font-size: 31px;
+}
+</style>
   <main id="main">
 
 
@@ -18,10 +26,10 @@
         </div>
 
         <div class="row">
-          <div class="col-lg-12 ">
+          <div class="col-lg-10  offset-lg-1">
             <div class="icon-box">
-              <div class="icon"><i class="bi bi-calendar4-week" style="color: #e9bf06;"></i></div>
-              <h4 class="title"><a href="">Information Your Mobile</a></h4>
+              <div class="icon"><i class="bi bi-phone" style="color: #e9bf06;"></i></div>
+              <h4 class="title"><a href=""> Your Mobile Features </a></h4>
               <div class="description ">
            
               <form action="{% url 'prediction' %}" method="post" role="form" class="form-inline form_view">
@@ -59,17 +67,17 @@
     <div class="modal-dialog lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Result Prediction</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h4 class="modal-title center">Result Prediction</h4>
+          
         </div>
         <div class="modal-body">
-          <h2 id="message_price">Prediction at mobile price by features (RAM, size, etc.) with each combination of those will result in different price class.</h2>
+          <div  id="message_price" class="alert alert-success" role="alert">
+            This is a secondary alert—check it out!
+          </div>
         </div>
-        <div class="modal-footer"><span class="btn btn-primary" style="color:#fff">
-          <a style="color: #ffff;" href="https://www.amazon.com/Stylus-battery-Unlocked-Motorola-Twilight/dp/B09PFC2DVD/ref=sr_1_1?keywords=mobile+phones&qid=1677552575&sr=8-1">Buy Mobile</span>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <div class="modal-footer">
+          <a class="btn btn-primary" style="color:#fff"  href="{{url}}" >Buy Mobile</a>
+          <button type="button" class=" close_modal btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

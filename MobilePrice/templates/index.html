@@ -15,7 +15,7 @@
           <div><a href="{% url 'prediction' %}" class="btn-get-started scrollto">Get Started</a></div>
         </div>
         <div class="col-lg-6 order-1 order-lg-2 hero-img">
-          <img src="{% static 'img/smartphone.jpg' %}" class="img-fluid" alt="">
+          <img src="https://images.pexels.com/photos/1476321/pexels-photo-1476321.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="img-fluid" alt="">
         </div>
       </div>
     </div>
@@ -31,8 +31,7 @@
         <div class="container">
   
           <div class="section-title">
-            <h2>Contact</h2>
-            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+            <h2>For Support</h2>
           </div>
   
           <div>
@@ -46,19 +45,19 @@
                 <div class="address">
                   <i class="bi bi-geo-alt"></i>
                   <h4>Location:</h4>
-                  <p>A108 Adam Street, New York, NY 535022</p>
+                  <p>saudi arabia, riyadh, RC 535022</p>
                 </div>
   
                 <div class="email">
                   <i class="bi bi-envelope"></i>
                   <h4>Email:</h4>
-                  <p>info@example.com</p>
+                  <p>Sara@mobile_price.com</p>
                 </div>
   
                 <div class="phone">
                   <i class="bi bi-phone"></i>
                   <h4>Call:</h4>
-                  <p>+1 5589 55488 55s</p>
+                  <p>+966 5555555555</p>
                 </div>
   
               </div>
@@ -67,7 +66,8 @@
   
             <div class="col-lg-8 mt-5 mt-lg-0">
   
-              <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <form action="{% url 'message_form' %}" method="post" role="form" class="php-email-form">
+                {% csrf_token %}
                 <div class="row">
                   <div class="col-md-6 form-group">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -82,12 +82,13 @@
                 <div class="form-group mt-3">
                   <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
                 </div>
+                
+                <div class="text-center"><button type="submit">Send Message</button></div>
                 <div class="my-3">
                   <div class="loading">Loading</div>
                   <div class="error-message"></div>
                   <div class="sent-message">Your message has been sent. Thank you!</div>
                 </div>
-                <div class="text-center"><button type="submit">Send Message</button></div>
               </form>
   
             </div>
@@ -118,40 +119,32 @@
     <!-- ======= Counts Section ======= -->
     <section id="counts" class="counts">
       <div class="container">
-
         <div class="text-center title">
           <h3>What we have achieved so far</h3>
           <p>Iusto et labore modi qui sapiente xpedita tempora et aut non ipsum consequatur illo.</p>
         </div>
-
         <div class="row counters position-relative">
 
-          <div class="col-lg-3 col-6 text-center">
+          <div class="  text-center ">
             <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
             <p>Clients</p>
           </div>
 
-          <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-            <p>Projects</p>
-          </div>
+        
 
-          <div class="col-lg-3 col-6 text-center">
+          <div class="  text-center ">
             <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
             <p>Hours Of Support</p>
           </div>
 
-          <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-            <p>Hard Workers</p>
-          </div>
+        
 
         </div>
 
       </div>
-    </section><!-- End Counts Section -->
+    </section>
 
-  </main><!-- End #main -->
+  </main>
 
   {% endblock content %}
 
