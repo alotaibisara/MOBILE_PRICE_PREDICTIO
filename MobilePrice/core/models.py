@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 # Create your models here.
 class MobileModel(models.Model):
     battery_power =models.IntegerField(_("battery power"),null=False,blank=False)
@@ -27,4 +28,5 @@ class MobileModel(models.Model):
 
 class TrainModel(MobileModel):
     price_range=models.IntegerField(_("price range"),null=False,blank=False)
+
 

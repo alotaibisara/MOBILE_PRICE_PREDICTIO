@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 urlpatterns = [
 
         path("login/", view.ViewLogin.as_view(),name='login'),
+        path("register/", view.register,name='register'),
         path("logout/", view.logout_view,name='logout'),
         path("about_us/", view.ViewAboutUs.as_view(),name='about_us'),
         path("prediction/", view.ViewPrediction.as_view(),name='prediction'),

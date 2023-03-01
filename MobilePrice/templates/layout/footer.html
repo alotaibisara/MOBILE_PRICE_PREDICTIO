@@ -65,7 +65,10 @@ $(document).on('submit','.form_view',function(event){
           $('#result_modal').modal('show');
            var mes= `<h4>`+res.message+`</h4>`+` cost mobile with the features you have Entered.`;
 
+
           $('#message_price').html(mes);
+
+          $('#web_page').attr("href", res.url);
 
           
          

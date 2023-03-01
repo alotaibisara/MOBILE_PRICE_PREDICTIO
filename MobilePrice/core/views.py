@@ -7,6 +7,8 @@ from core.forms import LoginForm,TrainForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from core.models import TrainModel # imports the model
+from django.contrib.auth.models import User
+
 
 
 from django.urls import reverse
@@ -43,6 +45,8 @@ class ViewLogin(View):
 
             messages.error(request,self.form.errors)
             return render(request, 'login.html', {"form":self.form})
+        
+    
 
 
 
@@ -57,6 +61,21 @@ def logout_view(request):
     logout(request)
 
     return HttpResponseRedirect(reverse('index')) 
+
+def register(self, request):
+    if request.method == "POST":
+        new_user = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], password=request.POST["password"], first_name = request.POST["first_name"], last_name = request.POST["last_name"])
+        new_user.save()
+
+        #if register successful redirect to sign in page
+        return redirect("templates:login")
+
+
+    return render(request, "templates/register.html")
+
+
+
+
 
 
 
@@ -74,27 +93,27 @@ class ViewPrediction(View):
             trian=Predictor()
             per=trian.lreg.predict(trian.s.transform(np.array([form_data[i] for i in form_data]).reshape(1,-1)))
             message=" "
-            url = " "
+            url = ""
+            
+           
             if per ==0:
-                message="Between [700 & 1000] "
+                message=" Expected price Between [50$ & 100$] "
                 url="https://www.amazon.com/cell-phone-devices/b/ref=dp_bc_aui_C_2?ie=UTF8&node=7072561011"            
             elif per ==1:
-                message="Between [1100 & 1300]"
-                url="https://www.amazon.com/cell-phone-devices/b/ref=dp_bc_aui_C_2?ie=UTF8&node=7072561011"            
-
+                message="Expected price Between [100 $ & 150$] "
+                url="https://www.amazon.com/s?bbn=7072561011&rh=n%3A7072561011%2Cp_36%3A14674874011&dc&qid=1677670181&rnid=14674871011&ref=lp_7072561011_nr_p_36_2"            
             elif per ==2:
-                message="Between [1400 & 1700]"
-                url="https://www.amazon.com/cell-phone-devices/b/ref=dp_bc_aui_C_2?ie=UTF8&node=7072561011"            
-
+                message="Expected price Between [150$ & 250$] $"
+                url="https://www.amazon.com/s?bbn=7072561011&rh=n%3A7072561011%2Cp_36%3A14674875011&dc&qid=1677670181&rnid=14674871011&ref=lp_7072561011_nr_p_36_3"            
             else:
-                message="Between [1800 & 2000]"
-                url="https://www.amazon.com/cell-phone-devices/b/ref=dp_bc_aui_C_2?ie=UTF8&node=7072561011"            
+                message="Expected price Between [250$ & 450$] $"
+                url="https://www.amazon.com/s?bbn=7072561011&rh=n%3A7072561011%2Cp_36%3A14674876011&dc&qid=1677670181&rnid=14674871011&ref=lp_7072561011_nr_p_36_4"            
 
 
             context={
                 'status': "success",
                 'message': message,
-                'url' :url
+                'url' :url,
 
             }
         else:
@@ -124,4 +143,5 @@ class ViewMessage(View):
     def post(self, request, *args, **kwargs):
      
         return HttpResponse('index') 
+
 
